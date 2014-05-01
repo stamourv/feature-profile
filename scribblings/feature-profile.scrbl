@@ -92,6 +92,8 @@ Cost Breakdown
   1122 ms : fizzbuzz.rkt:7:11
 }
 
+@margin-note{Some of the reports for contracts are produced in separate
+files. See @secref["contract-profiling" #:doc '(lib "contract-profile/scribblings/contract-profile.scrbl")].}
 The first part of the profile reports the time spent performing output, and
 lists each call to @racket[printf] separately.
 The second part reports the time spent doing generic sequence dispatch.

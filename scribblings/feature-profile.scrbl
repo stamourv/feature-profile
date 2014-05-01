@@ -132,7 +132,7 @@ feature code, which introduces a slight overhead (less than 20%).
 }
 
 
-@section[#:tag "plug-ins"]{Adding Profiling Support to Libraries}
+@section{Adding Profiling Support to Libraries}
 
 Not all expensive features come from the standard library; some are provided by
 third-party libraries. For this reason, feature-specific profiling support for
@@ -300,7 +300,7 @@ To include the new feature when profiling, pass the feature struct to
 
 @subsection[#:tag "analysis"]{Implementing Feature-Specific Analyses}
 
-@defmodule[feature-profile/plug-in-lib]
+@defmodule[feature-profile/plug-in-lib #:link-target? #f]
 
 While the basic analysis provided by default by the profiling library (grouping
 costs by feature instance) is useful, instances of some features (such as

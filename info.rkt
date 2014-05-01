@@ -10,4 +10,6 @@
 
 (define pkg-desc "Profiling language/library feature costs.")
 
+(define version "1.0")
+
 (define pkg-authors '(stamourv))

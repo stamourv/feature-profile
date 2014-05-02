@@ -55,6 +55,8 @@ Here is an example feature profile:
 
 @racketmod[#:file "fizzbuzz.rkt" racket
 
+(require feature-profile)
+
 (define (divisible x n)
   (= 0 (modulo x n)))
 
@@ -78,10 +80,10 @@ account(s) for 54.7% of total running time
 4240 / 7752 ms
 
 Cost Breakdown
-  3354 ms : fizzbuzz.rkt:11:28
-  620 ms : fizzbuzz.rkt:10:28
-  134 ms : fizzbuzz.rkt:9:28
-  132 ms : fizzbuzz.rkt:8:28
+  3354 ms : fizzbuzz.rkt:13:28
+  620 ms : fizzbuzz.rkt:12:28
+  134 ms : fizzbuzz.rkt:11:28
+  132 ms : fizzbuzz.rkt:10:28
 
 
 Generic Sequences

@@ -157,7 +157,7 @@ Feature marks allow the profiler's sampling thread to observe when programs are
 executing feature code.
 
 Conceptually, feature marks are conditionally enabled
-@techlink[#:doc 'scribblings/reference]{continuation marks}
+@techlink[#:doc '(lib "scribblings/reference/reference.scrbl")]{continuation marks}
 that map feature keys to payloads.
 Feature keys can be any value, but must uniquely identify features and must be
 consistent with with the feature's plug-in (see @secref{plug-ins}).
@@ -190,7 +190,7 @@ profiling, and must be used with caution.
 }
 
 @item{@emph{Syntactic latent marks} are
-@techlink[#:doc 'scribblings/reference]{syntax properties} attached to the
+@techlink[#:doc '(lib "scribblings/reference/reference.scrbl")]{syntax properties} attached to the
 syntax of feature code, that are turned into actual continuation marks by
 @racket[feature-profile-compile-handler] or a similar compile handler that
 supports the key (see @racket[make-latent-mark-compile-handler]).

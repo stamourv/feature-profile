@@ -24,3 +24,6 @@ How to use
 * Wrap the code you want to profile in `feature-profile`
 * Run it with `racket -l feature-profile -t program.rkt`
 * `raco doc feature-profile`
+
+
+[Docs](http://pkg-build.racket-lang.org/doc/feature-profile@feature-profile/index.html)

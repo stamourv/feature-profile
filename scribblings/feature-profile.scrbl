@@ -53,7 +53,8 @@ running.
 
 Here is an example feature profile:
 
-@racketmod[#:file "fizzbuzz.rkt" racket
+@racketmod[#:file "fizzbuzz.rkt"
+racket
 
 (require feature-profile)
 

@@ -3,6 +3,7 @@
 ;; tree-walker to turn latent marks into active marks
 
 (require syntax/parse)
+(require rackunit)
 
 (provide make-latent-mark-compile-handler)
 
@@ -160,6 +161,94 @@
     [_
      (error "non-exhaustive pattern match" (syntax->datum stx))]))
 
-;; Tests
-;; (code-walk #`(+ 2 #,(syntax-property #'3 'x 3)) 'x)
-;; (code-walk (expand #`(define (f #:x x) x)) 'kw-opt-protocol)
+(module+ test
+  (define-syntax-rule (syntax-check-equal? a b)
+    (check-equal?
+     (syntax->datum a)
+     (syntax->datum b)))
+
+  (syntax-check-equal? (code-walk #'a 'x (hash)) #'a)
+  (syntax-check-equal? (code-walk (syntax-property #'a 'b 'c) 'c (hash)) #'a)
+  (syntax-check-equal?
+   (code-walk (syntax-property #'a 'b 'c) 'b (hash))
+   #'(with-continuation-mark 'b 'c a))
+  (syntax-check-equal?
+   (code-walk (expand #'(+ '1 '2)) 'x (hash))
+   #'(#%app + '1 '2))
+  (syntax-check-equal?
+   (code-walk (expand #`(+ 1 #,(syntax-property #'2 'a 'b))) 'b (hash))
+   #'(#%app + '1 '2))
+  (syntax-check-equal?
+   (code-walk (expand #`(+ 1 #,(syntax-property #'(+ 2 3) 'a 'b))) 'a (hash))
+   #'(#%app + '1 (with-continuation-mark 'a 'b (#%app + '2 '3))))
+  (syntax-check-equal?
+   (code-walk (expand #`(λ (x) #,(syntax-property #'(x) 'a 'b))) 'a (hash))
+   #'(#%expression (lambda (x) (with-continuation-mark 'a 'b (#%app x)))))
+  (syntax-check-equal?
+   (code-walk (expand #`(let ([x #,(syntax-property #'(+ 3 2) 'b 'c)])
+                          (λ (y z)
+                            #,(syntax-property
+                               #'(+ x y z)
+                               'a 'c))))
+              'a (hash))
+   #'(let-values (((x) (#%app + '3 '2)))
+       (lambda (y z)
+         (with-continuation-mark 'a 'c
+           (#%app + x y z)))))
+  (syntax-check-equal?
+   (code-walk (expand (syntax-property
+                       #`(letrec ([f (λ (x) #,(syntax-property
+                                               #'(if (= x 0)
+                                                     1
+                                                    (* x (f (- x 1))))
+                                               'b 'c))])
+                           (f 5))
+                       'b 'c))
+              'b (hash))
+   #'(with-continuation-mark 'b 'c
+       (letrec-values (((f) (lambda (x)
+                              (with-continuation-mark 'b 'c
+                                (if (#%app = x '0)
+                                    '1
+                                    (#%app * x (#%app f (#%app - x '1))))))))
+         (#%app f '5))))
+  (syntax-check-equal?
+   (code-walk (expand #`(let ()
+                          (define x 3)
+                          #,(syntax-property #'(set! x (+ 5 3)) 'a 'b)
+                          (- 8 x)))
+              'a (hash))
+   #'(let-values ()
+       (let-values (((x) '3))
+         (with-continuation-mark 'a 'b (set! x (#%app + '5 '3)))
+         (#%app - '8 x))))
+  (syntax-check-equal?
+   (code-walk (expand (syntax-property
+                       #`((case-lambda
+                           [() 3]
+                           [(x) #,(syntax-property #'x 'a 'b)]
+                           [(x y) (+ x y)])
+                          3 2)
+                       'a 'b))
+              'a (hash))
+   #'(with-continuation-mark 'a 'b
+       (#%app (case-lambda (() '3)
+                           ((x) (with-continuation-mark 'a 'b x))
+                           ((x y) (#%app + x y)))
+              '3 '2)))
+  (syntax-check-equal?
+   (code-walk (expand #`(module mymod racket
+                          #,(syntax-property #'(+ 1 2) 'a 'b)))
+              'a (hash))
+   #'(module mymod racket
+       (#%module-begin
+        (module configure-runtime '#%kernel
+          (#%module-begin (#%require racket/runtime-config) (#%app configure '#f)))
+        (#%app call-with-values (lambda () (with-continuation-mark 'a 'b
+                                             (#%app + '1 '2))) print-values))))
+
+  (check-equal?
+   (with-handlers ([exn:fail? (λ (exn) (void))])
+     (code-walk #'(+ 1 2) 'a (hash)))
+    (void))
+   )

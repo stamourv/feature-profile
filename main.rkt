@@ -12,7 +12,8 @@
          ;; for custom compile-handlers
          make-latent-mark-compile-handler
          default-syntactic-latent-mark-keys
-         default-functional-latent-marks)
+         default-functional-latent-marks
+         default-features)
 
 (define default-syntactic-latent-mark-keys
   (map feature-key default-features))
@@ -39,11 +40,11 @@
 
 (define-syntax (feature-profile/user stx)
   (syntax-parse stx
-    [(_ (~or (~optional (~seq #:extra-features e-fs) #:defaults ([e-fs #''()]))
+    [(_ (~or (~optional (~seq #:features e-fs) #:defaults ([e-fs #'default-features]))
              (~optional (~seq #:quiet? q?) #:defaults ([q? #'#f])))
         ...
         body ...)
      #'(custom-profile (append e-fs default-features) q? body ...)]))
 
-(define (feature-profile-thunk thunk #:extra-features [e-fs '()] #:quiet? [q? #f])
-  (feature-profile/user #:extra-features e-fs #:quiet? q? (thunk)))
+(define (feature-profile-thunk thunk #:features [e-fs '()] #:quiet? [q? #f])
+  (feature-profile/user #:features e-fs #:quiet? q? (thunk)))

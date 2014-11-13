@@ -107,7 +107,7 @@ The @racket[for] form on line 5 operates generically on the list returned by
 @section{Using the Profiler}
 
 
-@defform[(feature-profile [#:extra-features e-fs] body ...)
+@defform[(feature-profile [#:features features] body ...)
          #:contracts ([e-fs (listof feature?)])]{
 
 Reports costs of feature instances and the overall costs of each feature to
@@ -118,13 +118,13 @@ overall, then breaks down that time by feature instance.
 Features are sorted in decreasing order of time, and only features for which
 time was observed are displayed.
 
-To profile features that are not built-in to the feature profiler and require
-separate feature plug-ins, pass a list of feature objects (see
-@secref{plug-ins}) as the @racket[#:extra-features] argument.
+@racket[features] is the list of features objects (see @secref{plug-ins})
+that the feature profiler tests.
+If no list is provided then the default features objects are used.
 
 }
 
-@defproc[(feature-profile-thunk [#:extra-features e-fs (listof feature?)]
+@defproc[(feature-profile-thunk [#:features features (listof feature?)]
                                 [thunk (-> any)])
          any]{
 Like @racket[feature-profile], but as a function which takes a thunk to profile

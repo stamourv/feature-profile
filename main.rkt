@@ -44,7 +44,7 @@
              (~optional (~seq #:quiet? q?) #:defaults ([q? #'#f])))
         ...
         body ...)
-     #'(custom-profile (append e-fs default-features) q? body ...)]))
+     #'(custom-profile e-fs q? body ...)]))
 
 (define (feature-profile-thunk thunk #:features [e-fs '()] #:quiet? [q? #f])
   (feature-profile/user #:features e-fs #:quiet? q? (thunk)))

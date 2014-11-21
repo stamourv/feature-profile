@@ -140,6 +140,21 @@ The default set of features observed by the profiler.
 }
 
 
+@subsection{Default features}
+
+@defmodule[feature-profile/features]
+@deftogether[(@defthing[contracts-feature feature?]
+              @defthing[output-feature feature?]
+              @defthing[generic-sequence-dispatch-feature feature?]
+              @defthing[type-casts-feature feature?]
+              @defthing[keyword-optional-arguments-feature feature?]
+              @defthing[pattern-matching-feature feature?]
+              @defthing[send-dispatch-feature feature?])]{
+Individual features provided by the feature profiler.
+To use all of the features, use @racket[default-features].
+}
+
+
 @section{Adding Profiling Support to Libraries}
 
 Not all expensive features come from the standard library; some are provided by

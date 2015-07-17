@@ -3,7 +3,6 @@
 ;; "framework" to make building custom profilers easier
 
 (require profile/sampler profile/utils
-         unstable/list
          racket/contract/private/blame
          (for-syntax syntax/parse)
          "structs.rkt")

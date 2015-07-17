@@ -5,7 +5,6 @@
 
 (define deps '("base"
                "contract-profile"
-               "unstable-list-lib"
                "profile-lib"
                "rackunit-lib"))
 (define build-deps '("scribble-lib" "racket-doc" "sandbox-lib"))

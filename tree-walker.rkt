@@ -113,6 +113,9 @@
            #%declare begin-for-syntax define-syntaxes)
       . x)
      stx]
+    [(head . x) ; phase-shifted code
+     #:when (and (identifier? #'head) (not (identifier-binding #'head)))
+     stx]
 
     ;; some things we traverse all of
     [((~and head (~or #%expression begin begin0 #%plain-app if

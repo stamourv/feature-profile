@@ -9,7 +9,7 @@
                "rackunit-lib"))
 (define build-deps '("scribble-lib" "racket-doc" "sandbox-lib"))
 
-(define scribblings '(("scribblings/feature-profile.scrbl" () (tool-library))))
+(define scribblings '(("scribblings/feature-profile.scrbl" () ("Performance Tools"))))
 
 (define pkg-desc "Profiling language/library feature costs.")
 

@@ -300,7 +300,8 @@ value. The grouping function only considers the payload of the most recent mark
 for a given feature.
 
 A value of @racket[#f] will result in the plug-in using the default grouping
-functions, which is usually what you want.
+functions, which is usually what you want. The default function expects that the
+payloads will be @racket[srcloc]-s.
 
 @racket[analysis] is a function that performs feature-specific analysis to
 present profile results in a custom format. It is expected to produce its

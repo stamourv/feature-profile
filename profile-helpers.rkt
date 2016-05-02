@@ -61,8 +61,11 @@
 ;; original srcloc->string does not support source location vectors
 (require (prefix-in r: racket))
 (define (srcloc->string s)
-  (unless (r:srcloc? s)
-    (error (format "Expected payload to be a srcloc, got ~v" s)))
+  (unless (and (vector? s)
+               (= (vector-length s) 5))
+    (raise-argument-error 'srcloc->string
+                          "(vector/c any/c any/c any/c any/c any/c)"
+                          s))
   (r:srcloc->string (apply make-srcloc (vector->list s))))
 
 (define (get-grouper feature) ; default is srcloc->string

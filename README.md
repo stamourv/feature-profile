@@ -6,6 +6,7 @@ features of the Racket language and standard library. This profiler
 reports time spent in individual feature instances.
 
 Out of the box, the profiler includes plug-ins for the following features:
+
 * Contracts
 * Output
 * Generic sequence dispatch
@@ -13,8 +14,8 @@ Out of the box, the profiler includes plug-ins for the following features:
 * Pattern matching
 * Method dispatch
 * Optional and keyword arguments
-Libraries may supply additional plug-ins for the features they introduce.
 
+Libraries may supply additional plug-ins for the features they introduce.
 
 How to install
 * `raco pkg install feature-profile`

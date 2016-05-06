@@ -301,7 +301,7 @@ for a given feature.
 
 A value of @racket[#f] will result in the plug-in using the default grouping
 functions, which is usually what you want. The default function expects that the
-payloads will be @racket[srcloc]-s.
+payloads will be a vector holding the fields of a @racket[srcloc].
 
 @racket[analysis] is a function that performs feature-specific analysis to
 present profile results in a custom format. It is expected to produce its

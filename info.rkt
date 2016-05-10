@@ -16,3 +16,9 @@
 (define version "1.0")
 
 (define pkg-authors '(stamourv))
+
+(define raco-commands
+  '(("feature-profile"
+     feature-profile/raco
+     "profile overhead from various linguistic constructs"
+     #f)))

@@ -38,7 +38,14 @@ a process accounting plug-in.
 
 @section{Quick Start}
 
-To use the profiler, wrap the code you wish to profile with the
+@index["raco contract-profile"]{
+The simplest way to use this tool is to use the @exec{raco feature-profile}
+command, which takes a file name as argument, and runs the feature-specific
+profiler on the @racket[main] submodule of that file (if it exists), or on the
+module itself (if there is no @racket[main] submodule).
+}
+
+Alternatively, wrap the code you wish to profile with the
 @racket[feature-profile] form. Then, execute the program with the
 @racket[feature-profile-compile-handler] active.
 

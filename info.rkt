@@ -3,7 +3,7 @@
 (define collection "feature-profile")
 (define compile-omit-paths '("case-studies" "overhead" "examples" "tests"))
 
-(define deps '("base"
+(define deps '(("base" #:version "6.3")
                "contract-profile"
                "profile-lib"
                "rackunit-lib"))

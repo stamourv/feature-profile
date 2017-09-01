@@ -28,7 +28,8 @@
              (define custom-samples ; first layer of the core only, or #f if empty
                (for/list ([c-s (feature-report-core-samples f-p)])
                  (and (not (empty? c-s))
-                      (first c-s))))
+                      (vector (first c-s)
+                              #f)))) ; dummy space-efficient info
              ;; the analysis is in the contract-profile collect
              (analyze-contract-samples custom-samples samples)
              ;; also call basic analysis with custom grouping

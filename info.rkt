@@ -1,7 +1,7 @@
 #lang info
 
 (define collection "feature-profile")
-(define compile-omit-paths '("case-studies" "overhead" "examples" "tests"))
+(define compile-omit-paths '("examples" "tests"))
 
 (define deps '(("base" #:version "6.3")
                "contract-profile"
